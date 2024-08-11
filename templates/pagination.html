@@ -1,0 +1,46 @@
+{% load mathfilters %}
+
+<nav class="my-3" aria-label="pagination">
+  <ul class="pagination">
+    {% if page_obj.number > 2 %}
+      <li class="page-item">
+        <a href="?page=1" class="page-link">1</a>
+      </li>
+    {% endif %}
+    {% if page_obj.number > 3 %}
+      <li class="page-item">
+        <span class="page-link pagination-ellipsis">&hellip;</span>
+      </li>
+    {% endif %}
+    {% if page_obj.has_previous %}
+      <li class="page-item">
+        <a class="page-link" aria-label="Page {{ page_obj.number|sub:1 }}" aria-current="page" href="?page={{ page_obj.number|sub:1 }}">
+          {{ page_obj.number|sub:1 }}
+        </a>
+      </li>
+    {% endif %}
+    <li class="page-item active">
+      <a class="page-link" aria-label="Page {{ page_obj.number }}" aria-current="page" href="?page={{ page_obj.number }}">
+        {{ page_obj.number }}
+      </a>
+    </li>
+    {% if page_obj.has_next %}
+      <li class="page-item">
+        <a class="page-link" aria-label="Page {{ page_obj.number|add:1 }}" aria-current="page" href="?page={{ page_obj.number|add:1 }}">
+          {{ page_obj.number|add:1 }}
+        </a>
+      </li>
+    {% endif %}
+    {% if page_obj.paginator.num_pages|sub:page_obj.number > 2 %}
+      <li class="page-item">
+        <span class="page-link pagination-ellipsis">&hellip;</span>
+      </li>
+    {% endif %}
+    {% if page_obj.paginator.num_pages|sub:page_obj.number > 1 %}
+      <li class="page-item">
+        <a href="?page={{ page_obj.paginator.num_pages }}" class="page-link">{{ page_obj.paginator.num_pages }}</a>
+      </li>
+    {% endif %}
+  </ul>
+</nav>
+<br>

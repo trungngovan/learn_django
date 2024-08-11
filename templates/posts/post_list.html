@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-12 d-flex justify-content-between align-items-center">
+                <h1>{% translate "Posts" %}</h1>
+                <a class="btn btn-outline-success" href="{% url 'post-create' %}">{% translate "Create new post" %}</a>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table mt-3 table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">{% translate "Title" %}</th>
+                    <th scope="col">{% translate "Author" %}</th>
+                    <th scope="col">{% translate "Created at" %}</th>
+                    <th scope="col">{% translate "Actions" %}</th>
+                </tr>
+                </thead>
+                <tbody class="table-group-divider">
+                {% if posts %}
+                    {% for post in posts %}
+                        <tr class="align-middle">
+                            <td>
+                                <a class="text-decoration-none" href="{% url 'post-detail' post.id %}">
+                                    {{ post.title }}
+                                </a>
+                            </td>
+                            <td> {{ post.author }}</td>
+                            <td>{{ post.created_at  | date:"Y-m-d H:i" }}</td>
+                            <td>
+                                <a class="btn btn-primary"
+                                   href="{% url 'post-detail' post.id %}">{% translate "View" %}</a>
+                                <a class="btn btn-warning" href="#">{% translate "Edit" %}</a>
+                                <a class="btn btn-danger" href="#">{% translate "Delete" %}</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="4">{% translate "No posts found." %}</td>
+                    </tr>
+                {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center">
+        {% include "pagination.html" with page=posts %}
+    </div>
+{% endblock content %}
+
